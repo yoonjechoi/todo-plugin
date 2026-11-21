@@ -1,0 +1,257 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://github.com/yoonjechoi/todo-plugin/schema/log.v1.schema.json",
+ "title": "todo 기록 한 줄 (log.jsonl) v1",
+ "description": "~/todo/log/YYYY-MM.jsonl 의 한 줄. 사람용 설명은 schema/log.md.",
+ "type": "object",
+ "required": [
+  "v",
+  "at",
+  "day",
+  "kind",
+  "task",
+  "title",
+  "by"
+ ],
+ "properties": {
+  "v": {
+   "const": 1,
+   "description": "형식 판"
+  },
+  "at": {
+   "type": "string",
+   "format": "date-time",
+   "description": "일어난 시각, 시간대 포함"
+  },
+  "day": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+   "description": "속한 하루. day_boundary_hour 전은 전날"
+  },
+  "kind": {
+   "enum": [
+    "recommend",
+    "pick",
+    "add",
+    "done",
+    "drop",
+    "wait",
+    "change"
+   ],
+   "description": "일어난 일의 종류"
+  },
+  "task": {
+   "type": "string",
+   "pattern": "^t-\\d{8}-\\d{2,}$",
+   "description": "장부의 할 일 번호(만든 날 + 순번)"
+  },
+  "title": {
+   "type": "string",
+   "minLength": 1,
+   "description": "그때의 할 일 이름"
+  },
+  "by": {
+   "enum": [
+    "person",
+    "ai",
+    "program"
+   ],
+   "description": "누가 했나"
+  },
+  "n": {
+   "type": "integer",
+   "minimum": 1,
+   "description": "그날 화면 번호(#7 → 7)"
+  },
+  "group": {
+   "enum": [
+    "must",
+    "unblock",
+    "quick",
+    "check",
+    "big"
+   ],
+   "description": "원고 묶음"
+  },
+  "reason": {
+   "type": "string",
+   "description": "근거 한 줄"
+  },
+  "source": {
+   "enum": [
+    "calendar",
+    "journal",
+    "session",
+    "mail",
+    "ledger",
+    "person"
+   ],
+   "description": "근거 출처"
+  },
+  "brief": {
+   "type": "string",
+   "description": "그날 원고 파일 이름(days/YYYY-MM-DD.md)"
+  },
+  "answer": {
+   "enum": [
+    "today",
+    "date",
+    "none"
+   ],
+   "description": "고른 답"
+  },
+  "do": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+   "description": "할 날(사람이 정함)"
+  },
+  "due": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+   "description": "마감(사실)"
+  },
+  "project": {
+   "type": "string"
+  },
+  "requester": {
+   "type": "string"
+  },
+  "from": {
+   "type": "string",
+   "description": "처음 나온 곳"
+  },
+  "said": {
+   "type": "string",
+   "description": "사람이 한 말 그대로"
+  },
+  "picked_day": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+  },
+  "who": {
+   "type": "string"
+  },
+  "check_on": {
+   "type": "string",
+   "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+  },
+  "field": {
+   "enum": [
+    "due",
+    "do",
+    "title",
+    "project",
+    "requester"
+   ]
+  },
+  "before": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "after": {
+   "type": [
+    "string",
+    "null"
+   ]
+  }
+ },
+ "additionalProperties": true,
+ "allOf": [
+  {
+   "if": {
+    "properties": {
+     "kind": {
+      "const": "recommend"
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "n",
+     "group",
+     "reason",
+     "source"
+    ],
+    "properties": {
+     "by": {
+      "const": "ai"
+     }
+    }
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "kind": {
+      "const": "pick"
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "answer",
+     "said"
+    ],
+    "properties": {
+     "by": {
+      "const": "person"
+     }
+    }
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "kind": {
+      "enum": [
+       "add",
+       "done",
+       "drop",
+       "change"
+      ]
+     }
+    }
+   },
+   "then": {
+    "properties": {
+     "by": {
+      "const": "person"
+     }
+    }
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "kind": {
+      "const": "wait"
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "who",
+     "check_on"
+    ]
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "kind": {
+      "const": "change"
+     }
+    }
+   },
+   "then": {
+    "required": [
+     "field",
+     "before",
+     "after"
+    ]
+   }
+  }
+ ]
+}

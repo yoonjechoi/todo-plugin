@@ -1,0 +1,22 @@
+{
+  "name": "todo",
+  "description": "내 비서 플러그인 마켓플레이스 — 할 일 장부 · 아침 브리핑 · 오후 정리.",
+  "owner": {
+    "name": "yoonjechoi",
+    "url": "https://github.com/yoonjechoi"
+  },
+  "plugins": [
+    {
+      "name": "todo",
+      "description": "todo · morning · afternoon — 할 일 장부(~/todo/list.md)에 말로 넣고, 아침 · 오후에 한 화면으로 정리. AI는 추천만, 고르는 건 사람.",
+      "source": "./plugins/todo",
+      "category": "productivity",
+      "tags": [
+        "todo",
+        "briefing",
+        "assistant",
+        "korean"
+      ]
+    }
+  ]
+}

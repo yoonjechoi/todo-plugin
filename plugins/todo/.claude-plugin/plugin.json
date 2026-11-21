@@ -1,0 +1,15 @@
+{
+  "name": "todo",
+  "version": "0.1.0",
+  "description": "내 비서. 할 일 장부(~/todo/list.md)에 말로 넣고 · 끝내고 · 날을 바꾸고(todo), 아침에 캘린더 · 메일 제목 · 장부로 오늘 추천 화면을 만들고(morning), 오후에 끝낸 일 · 못 끝낸 일을 정리한다(afternoon). 원하면 내 메일로만 보낸다.",
+  "author": {
+    "name": "yoonjechoi"
+  },
+  "keywords": [
+    "todo",
+    "briefing",
+    "assistant",
+    "korean"
+  ],
+  "license": "MIT"
+}
